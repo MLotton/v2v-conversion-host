@@ -22,12 +22,20 @@ before_install:
 
 install:
   - pip install tox ansible yamllint
+  - pip install molecule docker
+  - pip install ansible-lint --upgrade
+
 
   # Check ansible version
   - ansible --version
 
 script:
   # Run sytax checks and linters
+  - mkdir ansible/oVirt.v2v-conversion-host/files
+  - cp wrapper/virt-v2v-wrapper.py ansible/oVirt.v2v-conversion-host/files/.
+  - cd ansible/oVirt.v2v-conversion-host
+  - molecule test -s install
+  - cd ../..
   - tox
   - cd kubevirt-provider/ && docker build -t v2v-conversion-host .
   - docker run --detach --publish 8080:8080 v2v-conversion-host
