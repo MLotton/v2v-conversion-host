@@ -1,0 +1,74 @@
+---
+- name: Prepare
+  hosts: all
+
+  tasks:
+
+    - block:
+
+        - name: check createrepo is installed
+          yum:
+            name: createrepo
+            state: present
+          register: my_result
+          until: my_result is succeeded
+
+        - name: check directory /opt/yum/empty
+          file:
+            path: /opt/yum/empty
+            state: directory
+
+        - name: check director /root/.ssh
+          file:
+            path: /root/.ssh
+            state: directory
+
+        - name: install python2-openstack repo
+          yum:
+            name: https://www.rdoproject.org/repos/rdo-release.rpm
+            state: present
+          register: my_result
+          until: my_result is succeeded
+
+        - name: install win virto repo
+          yum:
+            name: https://fedorapeople.org/groups/virt/virtio-win/repo/stable/virtio-win-0.1.141-1.noarch.rpm
+            state: present
+          register: my_result
+          until: my_result is succeeded
+
+      when: v2v_host_type == 'openstack'
+
+    - block:
+
+        - name: create user vdsm
+          user:
+            name: vdsm
+            home: /var/lib/vdsm
+
+        - name: check directory /var/lib/vdsm/.ssh
+          file:
+            path: /var/lib/vdsm/.ssh
+            state: directory
+
+        - name: install ovirt repo
+          yum:
+            name: https://resources.ovirt.org/pub/ovirt-4.2/rpm/el7/noarch/ovirt-release42-4.2.8-1.el7.noarch.rpm
+            state: present
+          register: my_result
+          until: my_result is succeeded
+
+      when: v2v_host_type == "rhv"
+
+# Need to remove files/ and wrapper after role execution
+# - name: create files/ directory
+#   file:
+#     path: ../../files
+#     state: directory
+#   delegate_to: localhost
+
+# - name: copy wrapper
+#   copy:
+#     src: ../../../../wrapper/virt-v2v-wrapper.py
+#     dest: ../../files/.
+#   delegate_to: localhost
