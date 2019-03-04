@@ -1,0 +1,23 @@
+FROM centos:7
+USER root
+
+# WARNING : Docker group ID must be the same GID as the GID from jenkins host machine
+# WARNING : Jenkins user ID must be the same UID as the UID from jenkins host machine
+# WARNING : Jenkins group ID must be the same GID as the GID from jenkins host machine 
+
+RUN yum -y install epel-release && \
+    yum -y install gcc python-pip python-devel openssl-devel libselinux-python && \
+    pip install ansible && \
+    pip install molecule && \
+    pip install ansible-lint --upgrade && \
+    pip install docker && \
+    yum -y install docker && \
+    systemctl enable docker && \
+    groupadd -g 1001 docker
+
+RUN groupadd -r -g 994 jenkins && \
+    useradd -r -d /var/lib/jenkins -u 997 -g jenkins -G docker jenkins && \
+    mkdir -p /var/lib/jenkins && \
+    chown -R jenkins:jenkins /var/lib/jenkins
+    # usermod -aG docker jenkins
+
