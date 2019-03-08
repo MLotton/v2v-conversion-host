@@ -1,0 +1,30 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: openstack
+lint:
+  name: yamllint
+  options:
+    config-file: molecule/install-openstack/yamllint-config.yml
+platforms:
+  - name: instance
+    image: d8de456c-54b4-4c1d-8977-d61e43a14d94
+    flavor: 0822c121-f658-4296-9f71-c819870589af
+    security_group_name: 91f286e1-423c-47d3-8bab-8ce3e11fec6b
+    keypair_name: mlotton
+    openstack_networks:
+      - id: 17995956-79b0-451f-a59b-e9863e40c9f2
+    hostname: instance
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    options:
+      x: ["301", "502", "303", "204"]
+scenario:
+  name: install-openstack
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
