@@ -11,6 +11,7 @@ RUN yum -y install epel-release && \
     pip install molecule && \
     pip install ansible-lint --upgrade && \
     pip install docker && \
+    pip install python-openstackclient && \
     yum -y install docker && \
     systemctl enable docker && \
     groupadd -g 1001 docker
@@ -21,3 +22,4 @@ RUN groupadd -r -g 994 jenkins && \
     chown -R jenkins:jenkins /var/lib/jenkins
     # usermod -aG docker jenkins
 
+ADD /jenkins-dependencies/cert-openstack.crt /etc/pki/ca-trust/source/anchors/cert-openstack.crt

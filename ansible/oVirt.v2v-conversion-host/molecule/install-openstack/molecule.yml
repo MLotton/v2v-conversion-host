@@ -18,6 +18,10 @@ platforms:
     hostname: instance
 provisioner:
   name: ansible
+  inventory:
+    links:
+      group_vars: inventory/group_vars/
+      host_vars: inventory/host_vars/
   lint:
     name: ansible-lint
     options:
