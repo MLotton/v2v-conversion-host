@@ -28,12 +28,12 @@ pipeline {
         OS_IDENTITY_API_VERSION = '3'
       }
       steps {
-        sh 'cd ansible/oVirt.v2v-conversion-host/ && molecule --debug test -s install-openstack'
+        sh 'cd ansible/oVirt.v2v-conversion-host/ && molecule test -s install-openstack'
       }
     }
     stage('molecule docker') {
       steps {
-        sh 'cd ansible/oVirt.v2v-conversion-host/ && molecule --debug test -s install'
+        sh 'cd ansible/oVirt.v2v-conversion-host/ && molecule test -s install'
       }
     }
   }
