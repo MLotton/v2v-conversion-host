@@ -2,7 +2,6 @@
 extends: default
 
 rules:
-  line-length: disable
-  # NOTE(retr0h): Templates no longer fail this lint rule.
-  #               Uncomment if running old Molecule templates.
-  # truthy: disable
+  line-length:
+    max: 160
+    level: warning

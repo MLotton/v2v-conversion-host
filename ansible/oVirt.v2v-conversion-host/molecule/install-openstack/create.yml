@@ -74,11 +74,6 @@
       os_networks_facts:
         name: "{{ neutron_network_name }}"
 
-    - name: test
-      debug:
-        msg: " name: {{ item.name }} image: {{ item.image }} flavor: {{ item.flavor }} security: {{ security_group_name }} key_name: {{ keypair_name }} net {{ item.openstack_networks[0]['id'] }} "
-      with_items: "{{ molecule_yml.platforms }}"
-
     - name: Create molecule instance(s)
       os_server:
         name: "{{ item.name }}"
