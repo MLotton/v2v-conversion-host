@@ -24,8 +24,8 @@ provisioner:
       host_vars: inventory/host_vars/
   lint:
     name: ansible-lint
-    # options:
-    # x: ["301", "502", "303", "204"]
+    options:
+      x: ["301", "502"]
 scenario:
   name: install-openstack
 verifier:
