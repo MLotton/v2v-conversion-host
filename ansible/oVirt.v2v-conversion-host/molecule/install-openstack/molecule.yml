@@ -28,6 +28,18 @@ provisioner:
       x: ["301", "502"]
 scenario:
   name: install-openstack
+  test_sequence:
+    - lint
+    - destroy
+    - dependency
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence
+    - side_effect
+    - verify
+    - destroy
 verifier:
   name: testinfra
   lint:
