@@ -1,0 +1,18 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal python-zipstream)
+      become: true
+      changed_when: false
+
+    - name: install v2v-conversion-host-wrapper
+      yum:
+        name: "https://github.com/oVirt/v2v-conversion-host/releases/download/v1.11.0/\
+              v2v-conversion-host-wrapper-1.11.0-1.el7.noarch.rpm"
+        state: present
+      register: my_result
+      until: my_result is succeeded

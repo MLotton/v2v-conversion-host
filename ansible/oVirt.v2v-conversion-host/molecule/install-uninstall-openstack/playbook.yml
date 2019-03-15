@@ -1,0 +1,42 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  pre_tasks:
+
+    - name: check file nb_times_converge exist
+      stat:
+        path: /tmp/nb_times_converge
+      register: nb_times_converge_file
+
+    - name: check file
+      slurp:
+        path: /tmp/nb_times_converge
+      register: nb_times_converge
+      when: nb_times_converge_file.stat.exists
+
+    - name: set fact
+      set_fact:
+        nb_times_converge:
+          content: MA==
+      when: nb_times_converge is skipped
+
+    - name: debug msg
+      debug:
+        msg: "nb of times converged : {{ nb_times_converge.content|b64decode }}"
+
+    - name: create file or update content for each molecule converge
+      copy:
+        content: "{{ nb_times_converge.content|b64decode|int + 1 }}"
+        dest: /tmp/nb_times_converge
+      changed_when: false
+
+  roles:
+    - role: oVirt.v2v-conversion-host
+      role_action: install
+      when: nb_times_converge.content|b64decode|int < 2
+
+    - role: oVirt.v2v-conversion-host
+      role_action: uninstall
+      when: nb_times_converge.content|b64decode|int >= 2
