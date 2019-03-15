@@ -7,12 +7,6 @@ pipeline {
 
   }
   stages {
-    stage('init') {
-      steps {
-        sh 'mkdir ansible/oVirt.v2v-conversion-host/files'
-        sh 'cp wrapper/virt-v2v-wrapper.py ansible/oVirt.v2v-conversion-host/files/.'
-      }
-    }
     stage('molecule openstack') {
       environment {
         OS_AUTH_URL = credentials('OS_AUTH_URL')
