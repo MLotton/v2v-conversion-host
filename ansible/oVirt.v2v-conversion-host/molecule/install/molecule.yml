@@ -11,9 +11,6 @@ platforms:
   - name: chost1.example.com
     hostname: chost1.example.com
     image: centos:7
-  - name: chost2.example.com
-    hostname: chost2.example.com
-    image: centos:7
 provisioner:
   name: ansible
   inventory:
