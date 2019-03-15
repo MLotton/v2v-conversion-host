@@ -14,17 +14,17 @@
 
     - block:
 
-        - name: check createrepo is installed
-          yum:
-            name: createrepo
-            state: present
-          register: my_result
-          until: my_result is succeeded
+        # - name: check createrepo is installed
+        #   yum:
+        #     name: createrepo
+        #     state: present
+        #   register: my_result
+        #   until: my_result is succeeded
 
-        - name: check directory /opt/yum/empty
-          file:
-            path: /opt/yum/empty
-            state: directory
+        # - name: check directory /opt/yum/empty
+        #   file:
+        #     path: /opt/yum/empty
+        #     state: directory
 
         - name: check director /root/.ssh
           file:
