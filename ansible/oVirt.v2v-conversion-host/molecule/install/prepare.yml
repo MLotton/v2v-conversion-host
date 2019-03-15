@@ -4,6 +4,14 @@
 
   tasks:
 
+    - name: install v2v-conversion-host-wrapper
+      yum:
+        name: "https://github.com/oVirt/v2v-conversion-host/releases/download/v1.11.0/\
+              v2v-conversion-host-wrapper-1.11.0-1.el7.noarch.rpm"
+        state: present
+      register: my_result
+      until: my_result is succeeded
+
     - block:
 
         - name: check createrepo is installed
