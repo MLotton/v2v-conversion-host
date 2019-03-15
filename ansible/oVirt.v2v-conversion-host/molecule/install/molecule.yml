@@ -37,5 +37,6 @@ scenario:
     - destroy
 verifier:
   name: testinfra
+  directory: ../tests-testinfra/
   lint:
     name: flake8

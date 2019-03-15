@@ -14,8 +14,11 @@ def test_hosts_file(host):
     assert f.group == 'root'
 
 
-def test_host_infra_default(host):
+def test_host_infra_default_install(host):
     inventory_vars = host.ansible.get_variables()
+
+    if inventory_vars.get("role_action") != "install":
+        return
 
     # Check wrapper
     assert host.package("v2v-conversion-host-wrapper").is_installed
@@ -47,6 +50,10 @@ def test_host_infra_default(host):
 
 def test_host_infra_openstack(host):
     inventory_vars = host.ansible.get_variables()
+
+    if inventory_vars.get("role_action") != "install":
+        return
+
     if inventory_vars.get("v2v_host_type") == "openstack":
 
         # Check transport ssh
@@ -69,6 +76,10 @@ def test_host_infra_openstack(host):
 
 def test_host_infra_rhv(host):
     inventory_vars = host.ansible.get_variables()
+
+    if inventory_vars.get("role_action") != "install":
+        return
+
     if inventory_vars.get("v2v_host_type") == "rhv":
 
         # Check transport ssh

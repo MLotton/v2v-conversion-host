@@ -14,18 +14,6 @@
 
     - block:
 
-        # - name: check createrepo is installed
-        #   yum:
-        #     name: createrepo
-        #     state: present
-        #   register: my_result
-        #   until: my_result is succeeded
-
-        # - name: check directory /opt/yum/empty
-        #   file:
-        #     path: /opt/yum/empty
-        #     state: directory
-
         - name: check director /root/.ssh
           file:
             path: /root/.ssh
@@ -67,16 +55,3 @@
           until: my_result is succeeded
 
       when: v2v_host_type == "rhv"
-
-# Need to remove files/ and wrapper after role execution
-# - name: create files/ directory
-#   file:
-#     path: ../../files
-#     state: directory
-#   delegate_to: localhost
-
-# - name: copy wrapper
-#   copy:
-#     src: ../../../../wrapper/virt-v2v-wrapper.py
-#     dest: ../../files/.
-#   delegate_to: localhost
