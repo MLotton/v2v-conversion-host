@@ -34,7 +34,7 @@ def test_host_infra_default(host):
         assert (vddk_dir.exists and vddk_dir.is_directory)
         assert host.package("nbdkit-plugin-vddk").is_installed
 
-    #check ca-bundle
+    # Check ca-bundle
     ca_bundle = inventory_vars.get("v2v_ca_bundle")
     if ca_bundle is not None:
         ca_bundle_file = host.file("/etc/pki/ca-trust/source/anchors/"
@@ -42,7 +42,7 @@ def test_host_infra_default(host):
         assert (ca_bundle_file.exists and
                 ca_bundle_file.user == "root" and
                 ca_bundle_file.group == "root" and
-                ca_bundle_file.mode = 0o644)
+                ca_bundle_file.mode == 0o644)
 
 
 def test_host_infra_openstack(host):
