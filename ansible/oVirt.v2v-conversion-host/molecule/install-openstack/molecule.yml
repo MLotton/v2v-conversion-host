@@ -8,14 +8,22 @@ lint:
   options:
     config-file: molecule/install-openstack/yamllint-config.yml
 platforms:
-  - name: instance
+  - name: instanceSSH
     image: d8de456c-54b4-4c1d-8977-d61e43a14d94
     flavor: 0822c121-f658-4296-9f71-c819870589af
     security_group_name: 91f286e1-423c-47d3-8bab-8ce3e11fec6b
     keypair_name: mlotton
     openstack_networks:
       - id: 17995956-79b0-451f-a59b-e9863e40c9f2
-    hostname: instance
+    hostname: instanceSSH
+  - name: instanceVDDK
+    image: d8de456c-54b4-4c1d-8977-d61e43a14d94
+    flavor: 0822c121-f658-4296-9f71-c819870589af
+    security_group_name: 91f286e1-423c-47d3-8bab-8ce3e11fec6b
+    keypair_name: mlotton
+    openstack_networks:
+      - id: 17995956-79b0-451f-a59b-e9863e40c9f2
+    hostname: instanceVDDK
 provisioner:
   name: ansible
   inventory:
@@ -24,8 +32,8 @@ provisioner:
       host_vars: inventory/host_vars/
   lint:
     name: ansible-lint
-    options:
-      x: ["301", "502"]
+    # options:
+    # x: ["301", "502"]
 scenario:
   name: install-openstack
   test_sequence:
@@ -36,7 +44,7 @@ scenario:
     - create
     - prepare
     - converge
-    # - idempotence
+    - idempotence
     - side_effect
     - verify
     - destroy

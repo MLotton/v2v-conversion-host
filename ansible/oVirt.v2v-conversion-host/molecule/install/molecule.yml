@@ -11,6 +11,9 @@ platforms:
   - name: chost1.example.com
     hostname: chost1.example.com
     image: centos:7
+  - name: chost2.example.com
+    hostname: chost2.example.com
+    image: centos:7
 provisioner:
   name: ansible
   inventory:
@@ -19,8 +22,8 @@ provisioner:
       host_vars: inventory/host_vars/
   lint:
     name: ansible-lint
-    options:
-      x: ["301", "502"]
+    # options:
+    # x: ["301", "502"]
 scenario:
   name: install
   test_sequence:
@@ -31,7 +34,7 @@ scenario:
     - create
     - prepare
     - converge
-    # - idempotence
+    - idempotence
     - side_effect
     - verify
     - destroy

@@ -31,8 +31,6 @@ install:
 
 script:
   # Run sytax checks and linters
-  - mkdir ansible/oVirt.v2v-conversion-host/files
-  - cp wrapper/virt-v2v-wrapper.py ansible/oVirt.v2v-conversion-host/files/.
   - cd ansible/oVirt.v2v-conversion-host
   - molecule test -s install
   - cd ../..
